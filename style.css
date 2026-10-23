@@ -1,0 +1,220 @@
+@font-face{font-family:Neucha;src:url(Neucha.ttf);font-display:swap}
+:root{
+  --ink:#34506b;          /* цвет грифеля */
+  --ink2:#7390ab;
+  --blue:#3a9bf0;
+  --bl:#e6f3fe;
+  --bl2:#bfe0fb;
+  --paper:#fbfdff;
+  --warn:#e0674a;
+  --wob:255px 14px 225px 16px/16px 225px 14px 255px;
+  --wob2:16px 220px 14px 250px/250px 14px 225px 16px;
+  --ease:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;font:19px/1.35 Neucha,"Segoe Print","Bradley Hand",cursive,sans-serif;color:var(--ink);
+  background:
+    radial-gradient(circle at 12% 6%,rgba(90,175,250,.30),transparent 38%),
+    radial-gradient(circle at 92% 28%,rgba(80,215,230,.26),transparent 36%),
+    radial-gradient(circle at 18% 78%,rgba(150,160,255,.24),transparent 40%),
+    radial-gradient(circle at 88% 92%,rgba(110,200,250,.28),transparent 38%),
+    repeating-linear-gradient(transparent 0 33px,rgba(58,155,240,.12) 33px 34px),
+    var(--paper);
+  background-attachment:fixed}
+main{padding:16px 16px calc(100px + env(safe-area-inset-bottom));max-width:640px;margin:0 auto}
+section{animation:pageIn .35s ease backwards}
+@keyframes pageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+h1{font-size:32px;font-weight:400;margin:4px 0 8px;display:inline-block;padding:0 6px;
+  background:linear-gradient(transparent 55%,rgba(58,155,240,.35) 55% 92%,transparent 92%);border-radius:8px 18px 10px 20px}
+h2{font-size:23px;font-weight:400;margin:22px 0 8px}
+h3{font-weight:400}
+p.hint,.mu{color:var(--ink2)}
+p.hint{margin:4px 0 10px;font-size:17px}
+.mu{font-size:16px}
+
+/* ---- нарисованные контуры: линия на псевдоэлементе, искривлённая фильтром ---- */
+.card,.btn,.chip,.badge,.bar,.sheet{position:relative}
+.card::before,.btn::before,.chip::before,.badge::before,.bar::before,.sheet::before{
+  content:"";position:absolute;inset:0;border:2.5px solid var(--ink);border-radius:inherit;pointer-events:none;filter:url(#wob)}
+.chip::before{border-width:2px;border-color:var(--ink2)}
+.chip.on::before{border-color:var(--ink)}
+.badge::before{border-width:2px;border-color:var(--blue)}
+.btn.sec::before{border-style:dashed}
+.btn.warn::before{border-color:var(--warn)}
+
+/* ---- нижняя панель ---- */
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;padding:6px 8px calc(6px + env(safe-area-inset-bottom));z-index:5;
+  background:linear-gradient(transparent,var(--paper) 35%);backdrop-filter:blur(3px)}
+nav button{flex:1;border:0;background:none;padding:2px 0 0;color:var(--ink);display:flex;flex-direction:column;align-items:center;
+  font:inherit;cursor:pointer;--c:#2d9cf5;transition:transform .25s var(--ease)}
+nav button:nth-child(2){--c:#10bfd6}
+nav button:nth-child(3){--c:#5b7cff}
+nav button:nth-child(4){--c:#1fa8e8}
+nav button:nth-child(5){--c:#e08a3c}
+nav button:nth-child(6){--c:#8d6cf0}
+nav > button svg{width:38px;height:38px;padding:6px}
+nav > button span{font-size:12.5px;white-space:nowrap}
+
+/* запасы, дневник, выбор из списка, цены, напоминания */
+.stock{display:grid;grid-template-columns:1fr 90px 26px;gap:8px;align-items:center;padding:4px 0}
+.stock input{padding:6px 8px;text-align:right}
+.entry{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1.5px dashed rgba(115,144,171,.45)}
+.pick{display:grid;grid-template-columns:1fr 70px auto auto;gap:8px;align-items:center;padding:7px 0;border-bottom:1.5px dashed rgba(115,144,171,.45)}
+.pick input{padding:6px 8px;text-align:right}
+.dnav b{flex:1}
+.btn[disabled]{opacity:.4;pointer-events:none}
+textarea{width:100%;padding:10px 13px;border:2.5px solid var(--ink);border-radius:16px;background:rgba(255,255,255,.85);font:inherit;color:var(--ink);margin-top:3px;resize:vertical}
+.pricerow{flex-basis:100%;display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.pricerow label{display:flex;align-items:center;gap:5px;font-size:14px;color:var(--ink2);border-radius:12px;padding:2px 4px}
+.pricerow input[type=number]{width:88px;padding:4px 7px;font-size:15px}
+.pricerow label.best{background:rgba(95,178,122,.22);color:var(--ink)}
+.best-note{margin-top:6px;font-weight:700;color:#2e8a57}
+.chart{width:100%;height:auto;display:block;margin-top:8px}
+.chart text{font-size:10px;fill:var(--ink2)}
+.chart .grid{stroke:var(--ink2);stroke-opacity:.25;stroke-dasharray:3 3}
+.chart .ln{stroke:var(--blue);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.chart .dot{fill:var(--blue);stroke:#fff;stroke-width:1.5}
+.chart .bar2{fill:var(--blue);opacity:.8}
+.chart .bar2.over{fill:var(--warn)}
+.chart .target{stroke:var(--ink);stroke-width:1.2;stroke-dasharray:5 4;opacity:.6}
+#banner .note{margin:0 0 12px}
+/* персонаж */
+.char{width:118px;flex:none;background:#fbf8f2;border-radius:16px;padding:4px}
+.char svg{width:100%;height:auto;display:block}
+.char .ci{stroke:#1d1a22;stroke-linecap:round;stroke-linejoin:round}
+.charcard.small .char{width:74px}
+.charcard b{font-size:19px}
+.burnline{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:10px;padding-top:8px;border-top:1.5px dashed rgba(115,144,171,.45)}
+details summary{list-style-position:inside}
+
+/* список покупок */
+.shop{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:7px 0;border-bottom:1.5px dashed rgba(115,144,171,.5)}
+.shop .ck{flex:1 1 150px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.shop .ck input{width:22px;height:22px;accent-color:#3a9bf0;flex:none}
+.shop .q{color:var(--ink2);white-space:nowrap}
+.shop.got span{text-decoration:line-through;opacity:.6}
+.links{display:flex;gap:6px;flex:none}
+.links a{font-size:15px;padding:1px 10px;border-radius:var(--wob2);border:1.5px solid var(--ink2);color:var(--ink);text-decoration:none;
+  background:rgba(255,255,255,.6);transition:transform .2s var(--ease)}
+.links a:active{transform:scale(.9)}
+.links a:first-child{border-color:#3a9bf0}
+.links a:last-child{border-color:#3fb37f}
+nav button svg{width:46px;height:46px;padding:7px;border-radius:50% 46% 54% 48%;fill:var(--c);fill-opacity:.22;stroke:var(--c);
+  stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--c) 35%,white),transparent 75%);
+  transition:transform .3s var(--ease),background .3s}
+nav button span{font-size:15px;margin-top:1px;opacity:.75;transition:opacity .2s}
+nav button:active svg{transform:scale(.88)}
+nav button.on svg{transform:translateY(-5px) scale(1.12) rotate(-4deg);fill-opacity:.5;
+  background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--c) 55%,white),color-mix(in srgb,var(--c) 15%,transparent) 80%)}
+nav button.on span{opacity:1;font-weight:700}
+
+/* ---- поля и кнопки ---- */
+input,select,button{font:inherit;color:var(--ink)}
+input[type=text],input[type=number],select{width:100%;padding:10px 13px;border:2.5px solid var(--ink);border-radius:var(--wob);background:rgba(255,255,255,.85);outline:none;
+  transition:box-shadow .2s,border-color .2s,transform .2s var(--ease)}
+input:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(58,155,240,.22);transform:scale(1.015)}
+.btn{border:0;background:linear-gradient(135deg,#9fd3fb,#6fb9f5);padding:11px 20px;border-radius:var(--wob);cursor:pointer;
+  box-shadow:3px 4px 0 rgba(52,80,107,.30);transition:transform .2s var(--ease),box-shadow .2s;color:#173247}
+.btn:hover{transform:translateY(-2px) rotate(-.6deg)}
+.btn:active{transform:translate(2px,3px) scale(.97);box-shadow:1px 1px 0 rgba(52,80,107,.3)}
+.btn.sec{background:rgba(255,255,255,.55);box-shadow:none}
+.btn.warn{background:rgba(255,255,255,.55);color:var(--warn);box-shadow:none}
+.btn.sm{padding:5px 13px;font-size:16px}
+.row{display:flex;gap:10px;align-items:center}
+.row>*{flex:1}
+.row>.fit{flex:none}
+
+.chips{display:flex;flex-wrap:wrap;gap:9px}
+.chip{border:0;background:rgba(255,255,255,.6);border-radius:var(--wob2);padding:4px 14px;cursor:pointer;font-size:18px;
+  transition:transform .25s var(--ease),background .25s,box-shadow .25s}
+.chip:hover{transform:translateY(-2px)}
+.chip:active{transform:scale(.9)}
+.chip.on{background:linear-gradient(135deg,#bfe3fd,#8fcbf8);box-shadow:2px 3px 0 rgba(52,80,107,.25);animation:pop .4s var(--ease)}
+@keyframes pop{0%{transform:scale(.8) rotate(-4deg)}60%{transform:scale(1.12) rotate(2deg)}100%{transform:none}}
+
+/* ---- карточки с акварельной заливкой ---- */
+.card{border:0;border-radius:var(--wob);padding:14px 18px;margin:16px 0;
+  background:linear-gradient(135deg,rgba(150,205,250,.55),rgba(255,255,255,.88) 62%);
+  box-shadow:inset 0 0 22px rgba(58,155,240,.20),3px 5px 0 rgba(52,80,107,.14);
+  animation:cardIn .5s var(--ease) backwards;transition:transform .25s var(--ease),box-shadow .25s}
+.card:nth-child(3n+2){background:linear-gradient(135deg,rgba(120,225,235,.45),rgba(255,255,255,.88) 62%);border-radius:var(--wob2)}
+.card:nth-child(3n){background:linear-gradient(135deg,rgba(170,175,255,.45),rgba(255,255,255,.88) 62%)}
+.card:nth-child(2){animation-delay:.04s}.card:nth-child(3){animation-delay:.08s}.card:nth-child(4){animation-delay:.12s}
+.card:nth-child(5){animation-delay:.16s}.card:nth-child(6){animation-delay:.2s}.card:nth-child(n+7){animation-delay:.24s}
+@keyframes cardIn{from{opacity:0;transform:translateY(16px) rotate(-.8deg)}to{opacity:1;transform:none}}
+.card[data-id]{cursor:pointer}
+.card[data-id]:hover{transform:translateY(-3px) rotate(.4deg)}
+.card[data-id]:active{transform:scale(.97)}
+.card h3{margin:0 0 2px;font-size:23px}
+.badge{white-space:nowrap;display:inline-block;border:0;padding:0 11px;border-radius:var(--wob2);font-size:16px;color:#1f6fb5;background:rgba(255,255,255,.8)}
+.badge.mid{color:var(--ink2)}
+.badge.low{color:var(--ink2);opacity:.8}
+.macros{display:flex;gap:14px;font-size:18px;margin-top:5px;flex-wrap:wrap}
+.macros b{font-weight:400;background:linear-gradient(transparent 60%,rgba(58,155,240,.4) 60%);padding:0 3px;border-radius:4px}
+.emo{display:inline-block;font-size:26px;margin-right:6px;animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-3px) rotate(6deg)}}
+
+.bar{height:14px;border:0;border-radius:var(--wob);overflow:hidden;margin-top:4px;background:rgba(255,255,255,.7)}
+.bar i{display:block;height:100%;transform-origin:left;animation:grow .9s cubic-bezier(.2,.9,.3,1) both;
+  background:linear-gradient(90deg,#5bb4f7,#3a9bf0),repeating-linear-gradient(-45deg,rgba(255,255,255,.35) 0 3px,transparent 3px 7px);
+  background-blend-mode:overlay;border-radius:0 8px 8px 0}
+.bar i.over{background:linear-gradient(90deg,#f39a7e,#e0674a)}
+@keyframes grow{from{transform:scaleX(0)}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label.f{display:block;font-size:17px;color:var(--ink2)}
+label.f input,label.f select{margin-top:3px}
+
+/* ---- окно рецепта ---- */
+#modal{position:fixed;inset:0;background:rgba(40,70,100,.4);z-index:20;display:flex;align-items:flex-end;animation:fade .25s both}
+#modal[hidden]{display:none}
+@keyframes fade{from{opacity:0}}
+.sheet{width:100%;max-width:640px;margin:0 auto;max-height:92vh;overflow:auto;border-radius:30px 24px 0 0;padding:18px 16px calc(26px + env(safe-area-inset-bottom));
+  background:
+    radial-gradient(circle at 10% 5%,rgba(90,175,250,.28),transparent 40%),
+    radial-gradient(circle at 95% 40%,rgba(80,215,230,.22),transparent 40%),
+    repeating-linear-gradient(transparent 0 33px,rgba(58,155,240,.12) 33px 34px),var(--paper);
+  animation:sheetIn .4s var(--ease) both}
+.sheet::before{border-bottom:0}
+@keyframes sheetIn{from{transform:translateY(60%);opacity:.4}}
+.ing{display:grid;grid-template-columns:1fr 86px 34px;gap:8px;margin:9px 0;align-items:center;animation:cardIn .35s backwards}
+.ing select{padding:8px 6px;font-size:17px}
+.ing input{padding:8px 9px;text-align:right}
+.x{border:0;background:none;color:var(--warn);font-size:24px;cursor:pointer;transition:transform .2s var(--ease)}
+.x:active{transform:scale(.7) rotate(20deg)}
+.sticky{position:sticky;top:-18px;padding:6px 0;z-index:2}
+.tot{margin:6px 0!important}
+.meal-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+#toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);z-index:30;padding:10px 22px;border-radius:var(--wob);
+  background:linear-gradient(135deg,#bfe3fd,#8fcbf8);box-shadow:3px 4px 0 rgba(52,80,107,.3);animation:toast 2.2s both;pointer-events:none}
+@keyframes toast{0%{opacity:0;transform:translate(-50%,20px) scale(.8)}12%{opacity:1;transform:translate(-50%,0) scale(1.05)}18%{transform:translate(-50%,0)}85%{opacity:1}100%{opacity:0;transform:translate(-50%,-10px)}}
+[hidden]{display:none!important}
+
+/* рисованные блюда */
+.art{width:76px;height:76px;flex:none}
+.art svg{width:100%;height:100%;display:block;overflow:visible}
+.art .ol{stroke:var(--ink);stroke-width:1.1;stroke-linejoin:round;stroke-linecap:round}
+.art .steam path{animation:steam 3s ease-in-out infinite}
+.art .steam path:nth-child(2){animation-delay:1.2s}
+@keyframes steam{0%,100%{opacity:.25;transform:translateY(2px)}50%{opacity:.8;transform:translateY(-3px)}}
+.cardrow{display:flex;gap:14px;align-items:center}
+.cbody{flex:1;min-width:0}
+.art.big{width:110px;height:110px;margin:0 auto 4px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+@media (prefers-color-scheme:dark){
+  :root{--ink:#d3e6f7;--ink2:#8fa9c1;--blue:#5db0f5;--paper:#101b26}
+  body{background:
+    radial-gradient(circle at 12% 6%,rgba(60,130,210,.35),transparent 40%),
+    radial-gradient(circle at 92% 30%,rgba(30,160,180,.25),transparent 38%),
+    radial-gradient(circle at 18% 80%,rgba(100,100,220,.25),transparent 40%),
+    repeating-linear-gradient(transparent 0 33px,rgba(120,180,240,.10) 33px 34px),var(--paper);background-attachment:fixed}
+  .sheet{background:radial-gradient(circle at 10% 5%,rgba(60,130,210,.3),transparent 40%),var(--paper)}
+  .card,.card:nth-child(n){background:linear-gradient(135deg,rgba(60,120,190,.35),rgba(20,35,50,.85) 65%)}
+  input[type=text],input[type=number],select{background:rgba(20,35,50,.8)}
+  .btn{color:#0f2335}
+  .chip,.bar,.badge{background:rgba(255,255,255,.08)}
+  .badge{color:#a9d2f0}
+  nav{background:linear-gradient(transparent,var(--paper) 35%)}
+}

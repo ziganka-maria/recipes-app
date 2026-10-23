@@ -1,0 +1,116 @@
+/* Тема «Мрачная сказка»: ночь, луна, холм-спираль, кривое дерево, бумага с чернильными пятнами, полоски */
+@font-face{font-family:Amatic;src:url(AmaticSC-Bold.ttf);font-display:swap}
+
+#scenery-b{display:none}
+html[data-theme=burton] #scenery-b{display:block;position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+#scenery-b svg{width:100%;height:100%;display:block}
+/* летучие мыши кружат вокруг своей точки и машут крыльями */
+#scenery-b .bat{animation:bat 16s ease-in-out infinite}
+#scenery-b .b2{animation-delay:-6s;animation-duration:20s}
+#scenery-b .b3{animation-delay:-11s;animation-duration:24s}
+#scenery-b .wing{transform-origin:18px 0;animation:flap .5s ease-in-out infinite alternate}
+@keyframes bat{0%,100%{transform:translate(0,0)}25%{transform:translate(-60px,-30px)}50%{transform:translate(-110px,25px)}75%{transform:translate(-40px,50px)}}
+@keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.45)}}
+/* окна дома мерцают, облака и туман медленно ползут */
+#scenery-b .win{animation:flicker 5s steps(1) infinite}
+#scenery-b .w1{animation-delay:-2s}#scenery-b .w2{animation-delay:-3.5s}
+@keyframes flicker{0%,100%{opacity:1}46%{opacity:.55}48%{opacity:1}72%{opacity:.8}}
+#scenery-b .drift{animation:sdrift 70s ease-in-out infinite alternate}
+@keyframes sdrift{from{transform:translateX(-20px)}to{transform:translateX(40px)}}
+#scenery-b .fog{animation:fog 30s linear infinite}
+@keyframes fog{from{transform:translateX(0)}to{transform:translateX(120px)}}
+
+html[data-theme=burton]{
+  --ink:#ece6da;      /* светлые линии на тёмном фоне */
+  --ink2:#b8afc4;
+  --blue:#9b87c9;
+  --bl:#2b2635;
+  --bl2:#4a3f5e;
+  --paper:#17151c;
+  --warn:#e07a63;
+}
+html[data-theme=burton] body{
+  background:radial-gradient(ellipse at 78% 10%,#4b455a 0,#2b2734 34%,#17151c 78%);background-attachment:fixed;
+  color:var(--ink);font-size:19px}
+html[data-theme=burton] body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.09;mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+/* заголовки узким «пляшущим» шрифтом */
+html[data-theme=burton] h1{font-family:Amatic,Neucha,cursive;font-size:46px;letter-spacing:1px;color:#f3eee4;background:none;padding:0;transform:rotate(-1.5deg)}
+html[data-theme=burton] h1::after{content:"";display:block;width:150px;height:7px;margin-top:-4px;border-radius:3px;
+  background:repeating-linear-gradient(90deg,#f3eee4 0 9px,#17151c 9px 18px);box-shadow:0 0 0 1.5px #f3eee4}
+html[data-theme=burton] h2{font-family:Amatic,Neucha,cursive;font-size:32px;letter-spacing:.5px;border:0;padding:0 0 0 30px;position:relative;color:#f3eee4}
+html[data-theme=burton] h2::before{content:"";position:absolute;left:0;top:50%;width:24px;height:24px;transform:translateY(-50%);
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 12m-1 0a1 1 0 1 1 2 0a3 3 0 1 1 -5 0a5 5 0 1 1 8 1a7 7 0 1 1 -11 -1a9 9 0 1 1 13 2' fill='none' stroke='%23ece6da' stroke-width='1.6' stroke-linecap='round'/></svg>") no-repeat center/contain}
+html[data-theme=burton] p.hint,html[data-theme=burton] .mu,html[data-theme=burton] label.f{color:var(--ink2)}
+
+/* карточки и окна — старая бумага: внутри свои тёмные «чернила» */
+html[data-theme=burton] .card,html[data-theme=burton] .sheet,html[data-theme=burton] #toast{--ink:#1f1b24;--ink2:#5d5566;color:var(--ink)}
+html[data-theme=burton] .card{
+  background:radial-gradient(circle at 88% 12%,rgba(120,100,160,.28),transparent 32%),radial-gradient(circle at 8% 92%,rgba(90,80,100,.22),transparent 30%),#eee8db;
+  box-shadow:5px 7px 0 rgba(0,0,0,.5);transform:rotate(-.4deg)}
+html[data-theme=burton] .card:nth-child(even){transform:rotate(.45deg)}
+html[data-theme=burton] .card:nth-child(n){background-color:#eee8db}
+html[data-theme=burton] .card::before{border-width:2px}
+html[data-theme=burton] .card[data-id]:hover{transform:rotate(0) translateY(-3px)}
+html[data-theme=burton] .card .mu,html[data-theme=burton] .sheet .mu,html[data-theme=burton] .sheet p.hint,html[data-theme=burton] .sheet label.f{color:#5d5566}
+html[data-theme=burton] .sheet h1,html[data-theme=burton] .sheet h2{color:#1f1b24}
+html[data-theme=burton] .sheet h1::after{background:repeating-linear-gradient(90deg,#1f1b24 0 9px,#eee8db 9px 18px);box-shadow:0 0 0 1.5px #1f1b24}
+html[data-theme=burton] .sheet h2::before{filter:invert(1)}
+html[data-theme=burton] .sheet{background:radial-gradient(circle at 90% 6%,rgba(120,100,160,.25),transparent 30%),#eee8db}
+html[data-theme=burton] .tot{background:#e4ddcf!important}
+html[data-theme=burton] .macros b{background:linear-gradient(transparent 60%,rgba(140,120,180,.45) 60%)}
+html[data-theme=burton] .art{filter:saturate(.55) contrast(1.08)}
+
+/* поля ввода */
+html[data-theme=burton] input[type=text],html[data-theme=burton] input[type=number],html[data-theme=burton] input[type=time],
+html[data-theme=burton] select,html[data-theme=burton] textarea{background:#f1ece2;color:#1f1b24;border:2px solid #8a7fa0}
+html[data-theme=burton] input:focus,html[data-theme=burton] select:focus,html[data-theme=burton] textarea:focus{border-color:#b9a6e6;box-shadow:0 0 0 4px rgba(155,135,201,.35)}
+
+/* кнопки в полоску */
+html[data-theme=burton] .btn{color:#f3eee4;background:repeating-linear-gradient(-45deg,#2b2635 0 8px,#3d344d 8px 16px);box-shadow:3px 4px 0 rgba(0,0,0,.55)}
+html[data-theme=burton] .card .btn,html[data-theme=burton] .sheet .btn{--ink:#1f1b24;color:#f3eee4}
+html[data-theme=burton] .card .btn::before,html[data-theme=burton] .sheet .btn::before{border-color:#1f1b24}
+/* тёмная подложка, чтобы светлый текст не терялся на фоне луны */
+html[data-theme=burton] .btn.sec,html[data-theme=burton] .btn.warn{background:rgba(23,21,28,.85);box-shadow:none}
+html[data-theme=burton] .card .btn.sec,html[data-theme=burton] .sheet .btn.sec,html[data-theme=burton] .card .btn.warn,html[data-theme=burton] .sheet .btn.warn{background:transparent}
+html[data-theme=burton] .card .btn.sec,html[data-theme=burton] .sheet .btn.sec{color:#1f1b24}
+html[data-theme=burton] .btn.warn{color:var(--warn)}
+html[data-theme=burton] .chip{background:rgba(23,21,28,.85);color:var(--ink)}
+html[data-theme=burton] .card .chip,html[data-theme=burton] .sheet .chip{background:transparent}
+html[data-theme=burton] .chip.on{background:#f1ece2;color:#1f1b24;box-shadow:3px 3px 0 rgba(0,0,0,.5)}
+html[data-theme=burton] .card .chip,html[data-theme=burton] .sheet .chip{color:#1f1b24}
+html[data-theme=burton] .card .chip.on,html[data-theme=burton] .sheet .chip.on{background:#2b2635;color:#f3eee4}
+html[data-theme=burton] .badge{background:#f1ece2;color:#3d344d}
+html[data-theme=burton] .badge::before{border-color:#1f1b24}
+
+/* шкалы в чёрно-белую полоску */
+html[data-theme=burton] .bar{background:#d9d2c4}
+html[data-theme=burton] .bar i{background:repeating-linear-gradient(-45deg,#1f1b24 0 5px,#8c7fb0 5px 10px)}
+html[data-theme=burton] .bar i.over{background:repeating-linear-gradient(-45deg,#1f1b24 0 5px,#c9584a 5px 10px)}
+html[data-theme=burton] .chart .ln{stroke:#3d344d}
+html[data-theme=burton] .chart .dot{fill:#3d344d}
+html[data-theme=burton] .chart .bar2{fill:#6e6185}
+
+/* списки на тёмном фоне */
+html[data-theme=burton] .entry,html[data-theme=burton] .shop,html[data-theme=burton] .pick{border-bottom-color:rgba(236,230,218,.25)}
+html[data-theme=burton] .card .entry,html[data-theme=burton] .sheet .entry,html[data-theme=burton] .sheet .pick{border-bottom-color:rgba(31,27,36,.25)}
+html[data-theme=burton] .links a{background:transparent;color:var(--ink);border-color:#8a7fa0}
+html[data-theme=burton] .best-note{color:#5b3f8f}
+html[data-theme=burton] .shop .ck input{accent-color:#8c7fb0}
+
+/* нижняя панель */
+html[data-theme=burton] nav{background:linear-gradient(transparent,#120f16 35%)}
+html[data-theme=burton] nav button{color:var(--ink)}
+html[data-theme=burton] nav button:nth-child(1){--c:#c3b2ec}
+html[data-theme=burton] nav button:nth-child(2){--c:#a9cc95}
+html[data-theme=burton] nav button:nth-child(3){--c:#e2bf6a}
+html[data-theme=burton] nav button:nth-child(4){--c:#96c3d6}
+html[data-theme=burton] nav button:nth-child(5){--c:#e39a9a}
+html[data-theme=burton] nav button:nth-child(6){--c:#d6d0e2}
+
+html[data-theme=burton] #modal{background:rgba(5,4,8,.6)}
+html[data-theme=burton] #toast{background:#eee8db;box-shadow:4px 5px 0 rgba(0,0,0,.55)}
+html[data-theme=burton] details summary{color:var(--ink2)}
+html[data-theme=burton] .leaf{border-radius:50% 50% 50% 0}
+@media (prefers-reduced-motion:reduce){#scenery-b .bat,#scenery-b .wing,#scenery-b .win,#scenery-b .drift,#scenery-b .fog{animation:none}}

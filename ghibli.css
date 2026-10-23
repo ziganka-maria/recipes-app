@@ -1,0 +1,133 @@
+/* Тема «Акварельная сказка»: небо, облака, холмы, бумага с зерном. Включается атрибутом data-theme="ghibli" на <html> */
+
+/* декорации видны только в акварельной теме */
+#scenery{display:none}
+html[data-theme=ghibli] #scenery{display:block;position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+#scenery svg{width:100%;height:100%;display:block}
+#scenery .stars{opacity:0}
+#scenery .stars circle{fill:#fff}
+#scenery .hill.h1{fill:#a9d8a6}
+#scenery .hill.h2{fill:#86c78f}
+#scenery .hill.h3{fill:#5fb07c}
+#scenery .cloud{animation:drift 60s ease-in-out infinite alternate}
+#scenery .c2{animation-duration:80s;animation-delay:-20s}
+#scenery .c3{animation-duration:95s;animation-direction:alternate-reverse}
+@keyframes drift{from{transform:translateX(-30px)}to{transform:translateX(90px)}}
+
+html[data-theme=ghibli]{
+  --ink:#33463f;
+  --ink2:#4f6b5f;
+  --blue:#3f9fd6;
+  --bl:#e8f5f8;
+  --bl2:#cfe9ef;
+  --paper:#fbf8ee;
+  --warn:#d97c5b;
+  --leaf:#5fb27a;
+  --wob:22px;
+  --wob2:22px;
+}
+html[data-theme=ghibli] body{
+  background:linear-gradient(180deg,#8fcdee 0,#bfe3f5 26%,#e9f5f2 56%,#f6f3dc 100%);background-attachment:fixed;
+  font-size:19px;letter-spacing:.2px}
+/* зерно акварельной бумаги поверх всего */
+html[data-theme=ghibli] body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.07;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .3  0 0 0 0 .3  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+/* заголовки */
+html[data-theme=ghibli] h1{background:none;color:#2c5a5e;text-shadow:0 2px 0 rgba(255,255,255,.8);padding:0;font-size:34px}
+html[data-theme=ghibli] h1::after{content:"";display:block;height:10px;margin-top:-2px;
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='10'><path d='M2 6Q15 0 30 5T60 5T90 5T118 4' stroke='%235fb27a' stroke-width='3' fill='none' stroke-linecap='round'/></svg>") no-repeat left center}
+html[data-theme=ghibli] h2{border:0;padding:0 0 0 30px;position:relative;color:#2f5d5a}
+html[data-theme=ghibli] h2::before{content:"";position:absolute;left:0;top:50%;width:24px;height:24px;transform:translateY(-55%);
+  background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M4 20C4 9 11 4 21 4C21 14 15 20 4 20Z' fill='%238fd18f' stroke='%234a8f66' stroke-width='1.3' stroke-linejoin='round'/><path d='M4 20Q10 13 17 8' stroke='%234a8f66' stroke-width='1.2' fill='none'/></svg>") no-repeat center/contain}
+html[data-theme=ghibli] p.hint,html[data-theme=ghibli] .mu{color:var(--ink2)}
+
+/* карточки: листы акварельной бумаги */
+html[data-theme=ghibli] .card::before,
+html[data-theme=ghibli] .btn::before,
+html[data-theme=ghibli] .chip::before,
+html[data-theme=ghibli] .badge::before,
+html[data-theme=ghibli] .bar::before,
+html[data-theme=ghibli] .sheet::before{display:none}
+html[data-theme=ghibli] .card{
+  border-radius:24px;border:1.5px solid rgba(95,178,122,.35);
+  background:linear-gradient(155deg,rgba(255,255,255,.94) 0,rgba(255,252,240,.92) 100%);
+  box-shadow:0 8px 20px rgba(60,110,130,.16),inset 0 -14px 24px rgba(180,225,200,.30),inset 0 8px 18px rgba(255,255,255,.7)}
+html[data-theme=ghibli] .card:nth-child(3n+2){background:linear-gradient(155deg,rgba(235,248,252,.95),rgba(255,252,240,.92))}
+html[data-theme=ghibli] .card:nth-child(3n){background:linear-gradient(155deg,rgba(238,249,236,.95),rgba(255,252,240,.92))}
+html[data-theme=ghibli] .card[data-id]:hover{transform:translateY(-3px)}
+html[data-theme=ghibli] .tot{background:rgba(232,245,248,.95)}
+html[data-theme=ghibli] .macros b{background:linear-gradient(transparent 62%,rgba(143,209,143,.55) 62%)}
+
+/* кнопки и плашки */
+html[data-theme=ghibli] .btn{border:1.5px solid rgba(60,120,100,.55);border-radius:999px;color:#1f4a44;
+  background:linear-gradient(135deg,#b4e3a8,#8fd0dc);box-shadow:0 4px 0 rgba(60,130,110,.35)}
+html[data-theme=ghibli] .btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(60,130,110,.35)}
+html[data-theme=ghibli] .btn.sec{background:rgba(255,255,255,.7);border:1.5px dashed rgba(60,130,110,.6);box-shadow:none}
+html[data-theme=ghibli] .btn.warn{background:rgba(255,255,255,.7);border:1.5px dashed var(--warn);color:var(--warn);box-shadow:none}
+html[data-theme=ghibli] .chip{border:1.5px solid rgba(95,178,122,.55);border-radius:999px;background:rgba(255,255,255,.78);padding:3px 15px}
+html[data-theme=ghibli] .chip.on{border-color:#4f9f6e;background:linear-gradient(135deg,#cdeec3,#a9dfe8);box-shadow:0 3px 0 rgba(60,130,110,.28)}
+html[data-theme=ghibli] .badge{border:1.5px solid rgba(63,159,214,.6);border-radius:999px;background:#f0f9fc;color:#2b78a8}
+html[data-theme=ghibli] .badge.mid{border-color:rgba(106,131,119,.6);color:var(--ink2);background:transparent}
+html[data-theme=ghibli] .badge.low{border-style:dashed}
+html[data-theme=ghibli] input[type=text],
+html[data-theme=ghibli] input[type=number],
+html[data-theme=ghibli] select{border:1.5px solid rgba(95,178,122,.65);border-radius:16px;background:rgba(255,255,255,.9)}
+html[data-theme=ghibli] input:focus,html[data-theme=ghibli] select:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(63,159,214,.2)}
+html[data-theme=ghibli] .bar{border:1.5px solid rgba(95,178,122,.5);border-radius:999px;background:rgba(255,255,255,.8)}
+html[data-theme=ghibli] .bar i{border-radius:999px;background:linear-gradient(90deg,#8fd18f,#5fb7d6)}
+html[data-theme=ghibli] .bar i.over{background:linear-gradient(90deg,#f1b08d,#d97c5b)}
+html[data-theme=ghibli] .shop{border-bottom:1.5px dashed rgba(95,178,122,.45)}
+html[data-theme=ghibli] .shop .ck input{accent-color:#5fb27a}
+html[data-theme=ghibli] .links a{border-radius:999px;background:rgba(255,255,255,.8)}
+
+/* нижняя панель: парящая «табличка» */
+html[data-theme=ghibli] nav{left:12px;right:12px;bottom:10px;padding:6px 4px;border-radius:28px;
+  background:rgba(255,253,244,.94);border:1.5px solid rgba(95,178,122,.4);backdrop-filter:blur(4px);
+  box-shadow:0 8px 22px rgba(50,100,110,.22)}
+html[data-theme=ghibli] nav button:nth-child(1){--c:#3f9fd6}
+html[data-theme=ghibli] nav button:nth-child(2){--c:#4cb06d}
+html[data-theme=ghibli] nav button:nth-child(3){--c:#eba43a}
+html[data-theme=ghibli] nav button:nth-child(4){--c:#27b1ae}
+html[data-theme=ghibli] nav button:nth-child(5){--c:#e2875a}
+html[data-theme=ghibli] nav button:nth-child(6){--c:#8f86e4}
+html[data-theme=ghibli] textarea{border:1.5px solid rgba(95,178,122,.65);background:rgba(255,255,255,.9)}
+html[data-theme=ghibli] .entry,html[data-theme=ghibli] .pick{border-bottom-color:rgba(95,178,122,.45)}
+html[data-theme=ghibli] .chart .ln{stroke:#3f9fd6}
+html[data-theme=ghibli] .chart .bar2{fill:#7cc59a}
+
+/* окно рецепта и подсказка */
+html[data-theme=ghibli] #modal{background:rgba(40,80,90,.4)}
+html[data-theme=ghibli] .sheet{border:1.5px solid rgba(95,178,122,.45);border-bottom:0;border-radius:30px 30px 0 0;
+  background:linear-gradient(180deg,#e4f4fa 0,#fbf8ee 38%)}
+html[data-theme=ghibli] #toast{border-radius:999px;background:linear-gradient(135deg,#cdeec3,#a9dfe8);color:#1f4a44;box-shadow:0 5px 0 rgba(60,130,110,.3)}
+html[data-theme=ghibli] .art .ol{stroke:#4d6a5e;stroke-width:1}
+html[data-theme=ghibli] .art{filter:drop-shadow(0 4px 4px rgba(60,110,100,.2))}
+
+/* листики при нажатии */
+.leaf{position:fixed;z-index:60;width:12px;height:8px;border-radius:0 100% 0 100%;pointer-events:none;animation:leaf 1s ease-out forwards}
+@keyframes leaf{from{opacity:1;transform:translate(0,0) rotate(0)}to{opacity:0;transform:translate(var(--dx),-70px) rotate(var(--rot))}}
+
+/* тёмная тема акварели: ночное небо со звёздами */
+@media (prefers-color-scheme:dark){
+  html[data-theme=ghibli]{--ink:#dcebe4;--ink2:#9ab3a8;--paper:#16262b;--bl:#1d3540;--bl2:#2b4a58;--blue:#69b8e6;--warn:#f09a78}
+  html[data-theme=ghibli] body{background:linear-gradient(180deg,#14233d 0,#1d3a52 45%,#244b4b 100%);background-attachment:fixed}
+  html[data-theme=ghibli] body::after{opacity:.05;mix-blend-mode:screen}
+  #scenery .stars{opacity:.9}
+  #scenery .cloud g{fill:#8fa7c4;opacity:.45}
+  #scenery .hill.h1{fill:#2c5f57}#scenery .hill.h2{fill:#245049}#scenery .hill.h3{fill:#1b3f3d}
+  html[data-theme=ghibli] h1{color:#cfeee3;text-shadow:none}
+  html[data-theme=ghibli] h2{color:#bfe3d3}
+  html[data-theme=ghibli] .card,html[data-theme=ghibli] .card:nth-child(n){
+    background:linear-gradient(155deg,rgba(38,66,72,.94),rgba(28,50,56,.94));border-color:rgba(120,200,160,.35);
+    box-shadow:0 8px 20px rgba(0,0,0,.35),inset 0 -14px 24px rgba(60,120,110,.18)}
+  html[data-theme=ghibli] .tot{background:rgba(35,70,80,.95)}
+  html[data-theme=ghibli] nav{background:rgba(24,44,50,.95)}
+  html[data-theme=ghibli] .sheet{background:linear-gradient(180deg,#1d3a4a 0,#16262b 40%)}
+  html[data-theme=ghibli] input[type=text],html[data-theme=ghibli] input[type=number],html[data-theme=ghibli] select,
+  html[data-theme=ghibli] .chip,html[data-theme=ghibli] .bar,html[data-theme=ghibli] .btn.sec,html[data-theme=ghibli] .btn.warn{background:rgba(255,255,255,.08)}
+  html[data-theme=ghibli] .badge{background:rgba(255,255,255,.08);color:#a9d8f0}
+  html[data-theme=ghibli] .btn{color:#0f2a2a}
+  html[data-theme=ghibli] .art .ol{stroke:#dcebe4}
+}
+@media (prefers-reduced-motion:reduce){#scenery .cloud{animation:none}.leaf{display:none}}
