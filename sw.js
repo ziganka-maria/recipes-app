@@ -1,5 +1,5 @@
-const CACHE = 'recipes-v16';
-const FILES = ['./', './index.html', './app.js', './features.js', './character.js', './scenery.js', './boot.js', './data.js', './art.js', './style.css', './ghibli.css', './burton.css', './AmaticSC-Bold.ttf', './Neucha.ttf', './manifest.json', './icon-192.png', './icon-512.png'];
+const CACHE = 'recipes-v18';
+const FILES = ['./', './index.html', './app.js', './features.js', './character.js', './scenery.js', './boot.js', './data.js', './data-extra.js', './recipes-extra.js', './art.js', './style.css', './ghibli.css', './burton.css', './AmaticSC-Bold.ttf', './Neucha.ttf', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));

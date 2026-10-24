@@ -19,12 +19,14 @@ const ART = {
   greek_yogurt: ['#fffdf4', 'blob'], cottage: ['#fff8e6', 'blob'], cheese: ['#f4cf62', 'cubes'], sour_cream: ['#fffdf4', 'blob'],
   milk: ['#fffdf4', 'blob'], kefir: ['#fffdf4', 'blob']
 };
-const ART_SKIP = new Set(['oil', 'butter', 'sugar', 'flour', 'soy_sauce', 'tomato_paste', 'garlic']);
+Object.assign(ART, EXTRA_ART);
+const ART_SKIP = new Set(['oil', 'butter', 'sugar', 'flour', 'soy_sauce', 'tomato_paste', 'garlic', ...EXTRA_ART_SKIP]);
 const ART_VESSEL = {
   r1: 'porridge', r3: 'yogurt', r4: 'porridge', r7: 'yogurt', r31: 'yogurt', r15: 'soup', r16: 'soup', r17: 'soup', r24: 'soup',
   r23: 'salad', r28: 'salad', r33: 'salad', r30: 'glass', r5: 'toast', r9: 'toast', r32: 'toast'
 };
-const BASE_ING = new Set(['oats', 'buckwheat', 'milk', 'kefir', 'greek_yogurt', 'cottage']);
+Object.assign(ART_VESSEL, EXTRA_VESSEL);
+const BASE_ING = new Set(['oats', 'buckwheat', 'milk', 'kefir', 'greek_yogurt', 'cottage', 'yogurt_plain', 'kefir_32', 'milk_1', 'milk_32']);
 
 let artSeq = 0;
 const hashStr = s => { let h = 2166136261; for (const ch of s) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; };

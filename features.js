@@ -28,8 +28,8 @@ function openSheet(html) {
 const rerenderTab = () => { const t = document.querySelector('nav .on'); if (t) showTab(t.dataset.tab); };
 
 // ================= свои продукты =================
-const CATS = ['Мясо и рыба', 'Молочное и яйца', 'Крупы и хлеб', 'Овощи и зелень', 'Фрукты и ягоды', 'Орехи, масла, прочее'];
-const CAT_COLOR = { 'Мясо и рыба': '#e3a07a', 'Молочное и яйца': '#fff6e0', 'Крупы и хлеб': '#e7cf9a', 'Овощи и зелень': '#8fcf7c', 'Фрукты и ягоды': '#ee8a7a', 'Орехи, масла, прочее': '#c9a070' };
+const CATS = ['Мясо и рыба', 'Молочное и яйца', 'Крупы и хлеб', 'Овощи и зелень', 'Фрукты и ягоды', 'Орехи, масла, прочее', 'Сладости и снеки', 'Соусы и специи', 'Напитки', 'Готовые блюда'];
+const CAT_COLOR = { 'Мясо и рыба': '#e3a07a', 'Молочное и яйца': '#fff6e0', 'Крупы и хлеб': '#e7cf9a', 'Овощи и зелень': '#8fcf7c', 'Фрукты и ягоды': '#ee8a7a', 'Орехи, масла, прочее': '#c9a070', 'Сладости и снеки': '#d9a0b8', 'Соусы и специи': '#d98f5f', 'Напитки': '#8fc4e0', 'Готовые блюда': '#e0c27a' };
 
 function registerProduct(p) {
   const row = [p.id, p.name, p.cat, p.k, p.p, p.f, p.c];
@@ -544,6 +544,7 @@ const GROUP = {
   dairy: ['milk', 'kefir', 'greek_yogurt', 'cottage', 'cheese', 'sour_cream', 'butter'], egg: ['egg'], honey: ['honey'],
   gluten: ['oats', 'pasta', 'bread', 'flour'], nuts: ['walnut', 'almond', 'peanut_butter'], soy: ['tofu', 'soy_sauce']
 };
+Object.keys(EXTRA_GROUPS).forEach(k => GROUP[k].push(...EXTRA_GROUPS[k]));
 const DIETS = [['none', 'Ем всё'], ['pesc', 'Без мяса, рыба можно'], ['veg', 'Вегетарианство'], ['vegan', 'Веганство']];
 const ALLERGENS = [['dairy', 'Молочное'], ['egg', 'Яйца'], ['gluten', 'Глютен'], ['nuts', 'Орехи'], ['fish', 'Рыба'], ['seafood', 'Морепродукты'], ['soy', 'Соя'], ['honey', 'Мёд']];
 let bannedCache = null;

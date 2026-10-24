@@ -86,7 +86,7 @@ function toast(msg) {
   const el = document.createElement('div'); el.id = 'toast'; el.textContent = msg;
   document.body.appendChild(el); setTimeout(() => el.remove(), 2200);
 }
-const CAT_EMO = { 'Мясо и рыба': '🍗', 'Молочное и яйца': '🥛', 'Крупы и хлеб': '🌾', 'Овощи и зелень': '🥦', 'Фрукты и ягоды': '🍓', 'Орехи, масла, прочее': '🥜' };
+const CAT_EMO = { 'Мясо и рыба': '🍗', 'Молочное и яйца': '🥛', 'Крупы и хлеб': '🌾', 'Овощи и зелень': '🥦', 'Фрукты и ягоды': '🍓', 'Орехи, масла, прочее': '🥜', 'Сладости и снеки': '🍫', 'Соусы и специи': '🧂', 'Напитки': '🥤', 'Готовые блюда': '🍲' };
 
 // ---------- оформление: «карандаш» или «акварель» ----------
 const THEMES = { pencil: 'Карандаш', ghibli: 'Акварельная сказка', burton: 'Мрачная сказка' };
@@ -478,7 +478,7 @@ function renderDay() {
 
 // ---------- план на неделю и список покупок ----------
 const DAYS = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-const LIQ = new Set(['milk', 'kefir', 'oil', 'soy_sauce']);
+const LIQ = new Set(['milk', 'kefir', 'oil', 'soy_sauce', ...EXTRA_LIQ]);
 const CAT_ORDER = ['Мясо и рыба', 'Молочное и яйца', 'Овощи и зелень', 'Фрукты и ягоды', 'Крупы и хлеб', 'Орехи, масла, прочее'];
 const SEARCH = { greens: 'укроп петрушка зелень', minced: 'фарш', berries: 'ягоды замороженные', pepper: 'перец болгарский', tuna: 'тунец консервированный', beans: 'фасоль консервированная', corn: 'кукуруза консервированная', cheese: 'сыр', oil: 'подсолнечное масло', oats: 'овсяные хлопья' };
 let week = store.get('week', null);
@@ -628,9 +628,9 @@ function renderProfile() {
   <p class="hint">Заполни данные и нажми «Рассчитать» или впиши свою норму вручную.</p>
   <div class="grid2">
     <label class="f">Пол<select id="sex"><option value="f" ${sel(p.sex, 'f')}>Женский</option><option value="m" ${sel(p.sex, 'm')}>Мужской</option></select></label>
-    <label class="f">Возраст<input type="number" id="age" value="${p.age}"></label>
-    <label class="f">Рост, см<input type="number" id="h" value="${p.h}"></label>
-    <label class="f">Вес, кг<input type="number" id="w" value="${p.w}"></label>
+    <label class="f">Возраст<input type="text" inputmode="decimal" id="age" value="${p.age}"></label>
+    <label class="f">Рост, см<input type="text" inputmode="decimal" id="h" value="${p.h}"></label>
+    <label class="f">Вес, кг<input type="text" inputmode="decimal" id="w" value="${p.w}"></label>
   </div>
   <label class="f" style="margin-top:10px">Активность
     <select id="act">
@@ -658,9 +658,11 @@ function renderProfile() {
   <p class="hint" id="chk"></p>
   <div class="row"><button class="btn" id="saveP">Сохранить</button></div>
   ${settingsHtml()}`;
+  // принимает и запятую, и точку; рост в метрах («1,65») считается как сантиметры
+  const nv = id => { let v = parseFloat(String($('#' + id).value).replace(',', '.')) || 0; if (id === 'h' && v > 0 && v < 3) v *= 100; return v; };
   const read = () => {
     Object.assign(profile, {
-      sex: $('#sex').value, age: +$('#age').value, h: +$('#h').value, w: +$('#w').value,
+      sex: $('#sex').value, age: nv('age'), h: nv('h'), w: nv('w'),
       act: +$('#act').value, goal: $('#goal').value
     });
   };
@@ -694,7 +696,7 @@ function renderProfile() {
     document.querySelectorAll('#tab-profile [data-theme]').forEach(x => x.classList.toggle('on', x === b));
   });
   $('#calc').onclick = () => {
-    if (!(+$('#age').value > 0 && +$('#h').value > 0 && +$('#w').value > 0)) { toast('Заполни возраст, рост и вес'); return; }
+    if (!(nv('age') > 0 && nv('h') > 0 && nv('w') > 0)) { toast('Заполни возраст, рост и вес'); return; }
     read();
     const n = calcNorm();
     $('#nk').value = n.k; $('#np').value = n.p; $('#nf').value = n.f; $('#nc').value = n.c;
@@ -703,7 +705,7 @@ function renderProfile() {
   };
   $('#saveP').onclick = () => {
     const next = Object.assign({}, profile, {
-      sex: $('#sex').value, age: +$('#age').value, h: +$('#h').value, w: +$('#w').value,
+      sex: $('#sex').value, age: nv('age'), h: nv('h'), w: nv('w'),
       act: +$('#act').value, goal: $('#goal').value,
       k: +$('#nk').value, p: +$('#np').value, f: +$('#nf').value, c: +$('#nc').value
     });
@@ -717,8 +719,8 @@ function renderProfile() {
   };
   bindSettings();
   // персонаж меняется сразу, пока вводишь рост и вес
-  const live = () => { $('#charbox').innerHTML = characterCard(Object.assign({}, profile, { h: +$('#h').value, w: +$('#w').value })); };
-  $('#h').addEventListener('input', live); $('#w').addEventListener('input', live);
+  const live = () => { $('#charbox').innerHTML = characterCard(Object.assign({}, profile, { sex: $('#sex').value, h: nv('h'), w: nv('w') })); };
+  $('#h').addEventListener('input', live); $('#w').addEventListener('input', live); $('#sex').addEventListener('change', live);
 }
 
 // ---------- старт ----------

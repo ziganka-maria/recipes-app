@@ -2,7 +2,7 @@
 // Персонаж в профиле: тонкие чернильные линии, большие глаза, зашитый рот, лоскутное платье, полосатые чулки.
 // Фигура плавно меняется по индексу массы тела, выражение лица — по дневнику за сегодня.
 
-const bmiOf = p => (p.h > 0 && p.w > 0) ? p.w / ((p.h / 100) ** 2) : 0;
+const bmiOf = p => (p.h >= 50 && p.h <= 260 && p.w >= 20 && p.w <= 400) ? p.w / ((p.h / 100) ** 2) : 0;
 function bmiCategory(b) {
   if (!b) return '';
   if (b < 18.5) return 'ниже нормы';
@@ -176,7 +176,7 @@ function characterCard(p, small) {
   const cat = bmiCategory(b);
   return `<div class="card charcard ${small ? 'small' : ''}"><div class="cardrow"><div class="char">${characterSvg(b, md.m, p.sex)}</div><div class="cbody">
     <b>${md.text}</b>
-    ${b ? `<div class="mu" style="margin-top:6px">ИМТ ${String(Math.round(b * 10) / 10).replace('.', ',')}: ${cat}</div>` : '<div class="mu">Впиши рост и вес, чтобы посчитать ИМТ</div>'}
+    ${b ? `<div class="mu" style="margin-top:6px">ИМТ ${String(Math.round(b * 10) / 10).replace('.', ',')}: ${cat}</div>` : '<div class="mu">Впиши рост в сантиметрах и вес в килограммах, чтобы посчитать ИМТ</div>'}
     ${!small ? '<div class="mu" style="margin-top:6px">Фигура меняется по индексу массы тела из профиля, настроение — по дневнику за сегодня. ИМТ — грубый показатель: при большой мышечной массе он бывает завышен.</div>' : ''}
   </div></div></div>`;
 }
